@@ -4,6 +4,7 @@ namespace KiranoDev\LaravelBackup\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use KiranoDev\LaravelBackup\Console\Commands\Backup;
 use KiranoDev\LaravelBackup\Helpers\TG;
 
 class LaravelBackupServiceProvider extends ServiceProvider
@@ -15,6 +16,10 @@ class LaravelBackupServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->commands([
+            Backup::class,
+        ]);
+
         $this->publishes([
             __DIR__.'/../config/backup.php' => config_path('backup.php'),
         ]);
