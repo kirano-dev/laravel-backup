@@ -1,0 +1,29 @@
+{
+    "name": "kirano-dev/laravel-backup",
+    "description": "Make compressed database backup & send it to Telegram",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "KiranoDev\\LaravelBackup\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kirano-dev",
+            "email": "developer@kirano.uz"
+        }
+    ],
+    "require-dev": {
+        "laravel/framework": "^11.30"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "KiranoDev\\LaravelBackup\\Providers\\LaravelBackupServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "spatie/laravel-db-snapshots": "^2.6"
+    }
+}
