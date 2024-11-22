@@ -3,7 +3,6 @@
 namespace KiranoDev\LaravelBackup\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use KiranoDev\LaravelBackup\Helpers\TG;
 use Spatie\DbSnapshots\Helpers\Format;
@@ -38,22 +37,8 @@ class Backup extends Command
             $size = $snapshot->size();
             $humanSize = Format::humanReadableSize($size);
 
-
-
-//            $name = str_replace(' ', '-', mb_strtolower(config('app.name')) . '-' . now()->format('Y-m-d'));
             $fullname = $snapshotName . '.sql.gz';
-//
-//            Artisan::call(
-//                'snapshot:create',
-//                [
-//                    'name' => $name,
-//                    '--compress' => true,
-//                ]
-//            );
-//
             $path = storage_path("app/snapshots/$fullname");
-//            $size = File::size($path);
-//            $humanSize = Format::humanReadableSize($size);
 
             if($size / 1024 / 1024 > 50) {
                 app(TG::class)->sendFormatMessage([
