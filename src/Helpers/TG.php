@@ -15,7 +15,7 @@ class TG
         $this->chat_id = config('backup.chat_id');
     }
 
-    const string EMPTY = 'empty';
+    const EMPTY = 'empty';
 
     public function sendFile(string $filePath, array $data): void
     {
