@@ -61,6 +61,7 @@ class TG
                 'parse_mode' => 'HTML',
                 'chat_id' => $this->chat_id,
                 'text' => $message,
+                'disable_notification' => true,
                 'link_preview_options' => json_encode([
                     'is_disabled' => true
                 ]),

@@ -24,6 +24,7 @@
         }
     },
     "require": {
-        "spatie/laravel-db-snapshots": "^2.6"
+        "spatie/laravel-db-snapshots": "^2.6",
+      "ext-zip": "*"
     }
 }
