@@ -65,43 +65,43 @@ class Backup extends Command
         $name = str_replace(' ', '-', mb_strtolower(config('backup.prefix')) . '-' . now()->format('Y-m-d'));
 
         try {
-//            $connectionName = config('database.default');
-//
-//            $compress = true;
-//            $tables = null;
-//            $exclude = null;
-//
-//            $snapshot = app(SnapshotFactory::class)->create(
-//                $name,
-//                config('db-snapshots.disk'),
-//                $connectionName,
-//                $compress,
-//                $tables,
-//                $exclude
-//            );
-//
-//            $size = $snapshot->size();
-//            $humanSize = Format::humanReadableSize($size);
-//
-//            $fullname = $name . '.sql.gz';
-//            $path = storage_path("app/snapshots/$fullname");
-//
-//            if($size / 1024 / 1024 > 50) {
-//                app(TG::class)->sendFormatMessage([
-//                    'Слишком большой файл' => $fullname,
-//                    'Вес' => $humanSize
-//                ]);
-//            } else {
-//                app(TG::class)->sendFile(
-//                    Storage::disk('snapshots')->path($fullname),
-//                    [
-//                        config('app.name') => '#' . config('backup.tag'),
-//                        'Вес' => $humanSize,
-//                    ],
-//                );
-//            }
-//
-//            File::delete($path);
+            $connectionName = config('database.default');
+
+            $compress = true;
+            $tables = null;
+            $exclude = null;
+
+            $snapshot = app(SnapshotFactory::class)->create(
+                $name,
+                config('db-snapshots.disk'),
+                $connectionName,
+                $compress,
+                $tables,
+                $exclude
+            );
+
+            $size = $snapshot->size();
+            $humanSize = Format::humanReadableSize($size);
+
+            $fullname = $name . '.sql.gz';
+            $path = storage_path("app/snapshots/$fullname");
+
+            if($size / 1024 / 1024 > 50) {
+                app(TG::class)->sendFormatMessage([
+                    'Слишком большой файл' => $fullname,
+                    'Вес' => $humanSize
+                ]);
+            } else {
+                app(TG::class)->sendFile(
+                    Storage::disk('snapshots')->path($fullname),
+                    [
+                        config('app.name') => '#' . config('backup.tag'),
+                        'Вес' => $humanSize,
+                    ],
+                );
+            }
+
+            File::delete($path);
         } catch (\Exception $e) {
             info('Backup Error: ' . $e->getMessage());
         }
