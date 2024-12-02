@@ -107,14 +107,16 @@ class Backup extends Command
         }
 
         try {
+            $destinationPath = storage_path("app/snapshots/files");
+
             try {
-                mkdir(storage_path("app/snapshots/files"));
+                mkdir($destinationPath);
             } catch (\Exception $e) {}
 
             $publicPath = public_path();
-            $destinationPath = storage_path("app/snapshots/files");
-            $archivePath = "{$destinationPath}/$name.zip";
-            $splitCommand = "zip -r -9 -s 45m $archivePath $publicPath";
+            $archivePath = "{$destinationPath}/$name.tar.zst";
+//            $splitCommand = "zip -r -9 -s 45m $archivePath $publicPath";
+            $splitCommand = "tar -cf - $publicPath | zstd - | split -b 45m - $archivePath.";
             exec($splitCommand);
 
             $chunks = File::allFiles($destinationPath);
