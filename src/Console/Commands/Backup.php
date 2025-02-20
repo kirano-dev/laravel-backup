@@ -96,7 +96,6 @@ class Backup extends Command
                     Storage::disk('snapshots')->path($fullname),
                     [
                         config('app.name') => '#' . config('backup.tag'),
-                        'Вес' => $humanSize,
                     ],
                 );
             }
@@ -120,6 +119,7 @@ class Backup extends Command
             exec($splitCommand);
 
             $chunks = File::allFiles($destinationPath);
+            $total = count($chunks);
             $index = 1;
 
             foreach ($chunks as $chunk) {
@@ -132,18 +132,16 @@ class Backup extends Command
                     app(TG::class)->sendFile(
                         $path,
                         [
-                            'Файлы' => "Чанк $index",
+                            'Файлы' => "Чанк $index/$total",
                             config('app.name') => '#' . config('backup.tag'),
-                            'Вес' => $humanSize,
                         ],
                     );
                 } catch (\Exception $e) {
                     app(TG::class)->sendFile(
                         $path,
                         [
-                            'Файлы' => "Чанк $index",
+                            'Файлы' => "Чанк $index/$total",
                             config('app.name') => '#' . config('backup.tag'),
-                            'Вес' => $humanSize,
                         ],
                     );
                 }
