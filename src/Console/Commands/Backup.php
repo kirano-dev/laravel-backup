@@ -103,7 +103,7 @@ class Backup extends Command
                 app(TG::class)->sendFile(
                     Storage::disk('snapshots')->path($fullname),
                     [
-                        config('app.name') => '#' . config('backup.tag'),
+                        config('app.name') => '#' . config('backup.tag') . ' #dump',
                     ],
                 );
             }
@@ -141,7 +141,7 @@ class Backup extends Command
                         $path,
                         [
                             'Файлы' => "Чанк $index/$total",
-                            config('app.name') => '#' . config('backup.tag'),
+                            config('app.name') => '#' . config('backup.tag') . ' #chunk',
                         ],
                     );
                 } catch (\Exception $e) {
@@ -149,7 +149,7 @@ class Backup extends Command
                         $path,
                         [
                             'Файлы' => "Чанк $index/$total",
-                            config('app.name') => '#' . config('backup.tag'),
+                            config('app.name') => '#' . config('backup.tag') . ' #chunk',
                         ],
                     );
                 }
