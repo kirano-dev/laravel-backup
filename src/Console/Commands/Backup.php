@@ -69,7 +69,15 @@ class Backup extends Command
 
             $compress = true;
             $tables = null;
-            $exclude = null;
+            $exclude = [
+                'pulse_entries',
+                'pulse_values',
+                'pulse_aggregates',
+
+                'telescope_entries',
+                'telescope_entries_tags',
+                'telescope_monitoring',
+            ];
 
             $snapshot = app(SnapshotFactory::class)->create(
                 $name,
