@@ -120,10 +120,16 @@ class Backup extends Command
                 mkdir($destinationPath);
             } catch (\Exception $e) {}
 
-            $publicPath = public_path();
+            $publicPath = public_path(); // например: /var/www/project/public
+            $storagePath = storage_path('app/public'); // например: /var/www/project/storage/app/public
             $archivePath = "{$destinationPath}/$name.tar.zst";
-//            $splitCommand = "zip -r -9 -s 45m $archivePath $publicPath";
-            $splitCommand = "tar -cf - $publicPath | zstd - | split -b 45m - $archivePath.";
+
+            $splitCommand = <<<CMD
+            tar -C "$publicPath/.." -cf - "$(basename $publicPath)" \
+                -C "$storagePath/.." "$(basename $storagePath)" \
+            | zstd - | split -b 45m - "$archivePath."
+            CMD;
+
             exec($splitCommand);
 
             $chunks = File::allFiles($destinationPath);
